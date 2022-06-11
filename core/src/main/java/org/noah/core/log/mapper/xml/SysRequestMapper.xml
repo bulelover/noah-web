@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.noah.core.log.mapper.SysRequestMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    t.ID
+    ,t.URI
+    ,t.PARAMS
+    ,t.METHOD
+    ,t.REMOTE_ADDR
+    ,t.BROWSER_NAME
+    ,t.BROWSER_VERSION
+    ,t.OS_NAME
+    ,t.CREATE_TIME
+    ,t.CREATE_LOGIN_NAME
+    ,t.CREATE_REAL_NAME
+    ,t.FLAG
+    </sql>
+
+    <sql id="conditions">
+        <where>
+            t.flag='1'
+            <if test="uri != null and uri != ''">
+                and t.URI = #{uri}
+            </if>
+            <if test="owner != null and owner == '1'.toString">
+                and t.URI != '/sys/log/requestPage'
+            </if>
+            <if test="params != null and params != ''">
+                and t.PARAMS like #{params}
+            </if>
+            <if test="method != null and method != ''">
+                and t.METHOD = #{method}
+            </if>
+            <if test="remoteAddr != null and remoteAddr != ''">
+                and t.REMOTE_ADDR = #{remoteAddr}
+            </if>
+            <if test="browserName != null and browserName != ''">
+                and t.BROWSER_NAME = #{browserName}
+            </if>
+            <if test="browserVersion != null and browserVersion != ''">
+                and t.BROWSER_VERSION = #{browserVersion}
+            </if>
+            <if test="osName != null and osName != ''">
+                and t.OS_NAME = #{osName}
+            </if>
+            <if test="createTimeBegin != null"><![CDATA[
+                and t.create_time >= #{createTimeBegin}
+            ]]></if>
+            <if test="createTimeEnd != null"><![CDATA[
+                and t.create_time <= #{createTimeEnd}
+            ]]></if>
+            <if test="createRealName != null and createRealName != ''"><![CDATA[
+                and t.create_real_name = #{createRealName}
+            ]]></if>
+            <if test="createLoginName != null and createLoginName != ''"><![CDATA[
+                and t.create_login_name = #{createLoginName}
+            ]]></if>
+        </where>
+    </sql>
+
+    <select id="selectPageList" resultType="org.noah.core.log.pojo.log.SysRequest">
+        select <include refid="Base_Column_List"/> from sys_request t
+        <include refid="conditions"/>
+        ${orderSql}
+    </select>
+
+</mapper>

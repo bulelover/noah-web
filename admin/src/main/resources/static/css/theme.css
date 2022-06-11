@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+body {
+    --primaryColor:#409EFF;
+    --primaryTextColor:#ffffff;
+    --primaryHoverColor:#66b1ff;
+    --primaryHoverTextColor:#ffffff;
+    --primaryActiveColor:#66b1ff;
+    --primaryActiveTextColor:#ffffff;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primaryColor);
+}
+
+header{
+    background-color: var(--primaryColor);
+    color: var(--primaryTextColor);
+}
+
+
+button.primary{
+    color: var(--primaryTextColor);
+    background-color: var(--primaryColor);
+    border-color: var(--primaryColor);
+}
+
+button.primary:focus, button.primary:hover{
+    background: var(--primaryHoverColor);
+    border-color: var(--primaryHoverColor);
+    color: var(--primaryHoverTextColor);
+}
+button.primary:active{
+    background: var(--primaryActiveColor);
+    border-color: var(--primaryActiveColor);
+    color: var(--primaryActiveTextColor);
+}
+
+.tag .tag-header>div.active{
+    border-color: var(--primaryColor);
+}

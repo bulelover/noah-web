@@ -1,0 +1,350 @@
+@charset "UTF-8";
+/* 基准大小 */
+html{
+    font-size: 10px;
+}
+/* 默认自提 */
+body {
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+    position: absolute; left:0;right: 0; bottom: 0;top: 0;
+    overflow: hidden;
+}
+/* 默认盒子模型 */
+*, :after, :before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/*图标旋转*/
+
+.iconfont{
+    font-size: inherit;
+    margin-right: .8rem;
+}
+
+.icon-spin {
+    display: inline-block;
+    -webkit-animation: icon-spin 1s infinite linear;
+    animation: icon-spin 1s infinite linear;
+}
+@keyframes icon-spin{
+    0% {
+        -webkit-transform: rotate(
+                0deg
+        );
+        transform: rotate(
+                0deg
+        );
+    }
+    100% {
+        -webkit-transform: rotate(
+                359deg
+        );
+        transform: rotate(
+                359deg
+        );
+    }
+}
+
+/* 布局 */
+header{
+    background-color: #409EFF;
+    color: #ffffff;
+    height: 6rem;
+    line-height: 6rem;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0 2.6rem;
+    z-index: 10;
+}
+.main-container{
+    position: absolute;
+    top: 6rem;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.page-iframe{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.page-wrapper {
+    padding: 1rem;
+}
+
+
+/* 表单 */
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+input {
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 3.6rem;
+    line-height: 3.6rem;
+    outline: none;
+    padding: 0 1rem;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+}
+input.large {
+    height: 4.2rem;
+    line-height: 4.2rem;
+    padding: 0 1.6rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: #409eff;
+}
+
+button{
+    display: inline-block;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    font-weight: 500;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    padding: 0 1.8rem;
+    height: 3.6rem;
+    line-height: 3.6rem;
+    font-size: 1.4rem;
+    border-radius: .4rem;
+}
+button.large{
+    padding: 0 2rem;
+    font-size: 1.6rem;
+    border-radius: .6rem;
+    height: 4.2rem;
+    line-height: 4.2rem;
+}
+button:focus, button:hover{
+    color: #409eff;
+    border-color: #c6e2ff;
+    background-color: #ecf5ff;
+}
+button:active{
+    color: #3a8ee6;
+    border-color: #3a8ee6;
+    outline: none;
+}
+
+button[disabled], button[is-disabled]:focus, button[is-disabled]:hover {
+    color: #c0c4cc;
+    cursor: not-allowed;
+    background-image: none;
+    background-color: #fff;
+    border-color: #ebeef5;
+}
+
+button.primary{
+    color: #ffffff;
+    background-color: #409EFF;
+    border-color: #409EFF;
+}
+
+button.primary:focus, button.primary:hover{
+    color: #ffffff;
+    background-color: #66b1ff;
+    border-color: #66b1ff;
+}
+button.primary:active{
+    color: #ffffff;
+    background: #66b1ff;
+    border-color: #66b1ff;
+}
+button.primary[disabled], button.primary[disabled]:active, .button.primary[disabled]:focus, button.primary[disabled]:hover {
+    color: #fff;
+    background-color: #a0cfff;
+    border-color: #a0cfff;
+}
+
+
+.form{
+    font-size: 1.4rem;
+}
+.form .form-item{
+    position: relative;
+    font-weight: normal;
+    padding: .4rem .6rem 1.6rem;
+    width: 100%;
+    display: inline-block;
+    vertical-align: top;
+}
+.form .form-item>span{
+    display: inline-block;
+    font-weight: normal;
+    text-align: right;
+    padding-right: .8rem;
+    width: 19%;
+    max-height: 3.6rem;
+    line-height: 1.8rem;
+    vertical-align: middle;
+    overflow: hidden;
+}
+.form .form-item>input,
+.form .form-item>select,
+.form .form-item>textarea{
+    width: 76%;
+}
+.form.top .form-item>span{
+    width: 100%;
+    text-align: left;
+    padding-right: .8rem;
+    padding-bottom: .3rem;
+}
+.form.top .form-item>input,
+.form.top .form-item>select,
+.form.top .form-item>textarea{
+    width: 100%;
+}
+.form-error{
+    position: absolute;
+    font-size: 1.2rem;
+    color: red;
+}
+
+
+
+/* 阴影 */
+.shadow{
+    box-shadow: 0 2px 12px 0 #d9d9d9;
+}
+
+.alert-msg-box{
+    position:fixed;top:0;width: 50rem;left: 50%;margin-left: -25rem;
+}
+
+.alert{
+    margin-top:20px;
+    width: 100%;
+    padding:2rem;
+    font-size:1.6rem;
+    border-radius: 0.4rem;
+}
+
+/* 卡片 */
+.card {
+    border-radius: 4px;
+    border: 1px solid #ebeef5;
+    background-color: #fff;
+    overflow: hidden;
+    color: #303133;
+}
+.card-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid #ebeef5;
+    box-sizing: border-box;
+    font-size: 1.6rem;
+}
+.card-body{
+    padding: 20px;
+}
+
+/* 树 */
+.tree-item {
+    position: relative;
+    line-height: 4rem;
+    height: 4rem;
+    padding: 0 1.4rem;
+    font-size: 1.4rem;
+}
+.tree-item:hover{
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+.tree-item-children{
+    display: none;
+}
+
+.tree-item-right {
+    position: absolute;
+    right: 1rem;
+    font-size: 1.2rem;
+}
+
+
+/* tag */
+.tag{
+    font-size: 0;
+}
+.tag .tag-header{
+    position: relative;
+}
+.tag .tag-header>div{
+    font-size: 1.4rem;
+    line-height: 4rem;
+    height: 4rem;
+    padding: 0 1.4rem;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.tag .tag-header>div:hover{
+    background-color: #f5f5f5;
+}
+.tag .tag-header>div.active{
+    border-bottom: 2px solid #409EFF;
+}
+.tag .tag-container{
+    border-top: 1px solid #dddddd;
+    position: relative;
+}
+.tag .tag-container>div.active{
+    display: block;
+}
+
+.tag .tag-container>div{
+    display: none;
+    font-size: 1.4rem;
+}
+.tag .tag-remove{
+    position: absolute;
+    top: 0.2rem;
+    font-size: 1.2rem;
+    line-height: 1.3rem;
+    border-radius: 1rem;
+    height: 1.3rem;
+    padding: 0.1rem;
+    color: #999999;
+    display: none;
+}
+.tag .tag-remove:hover{
+    background-color: #ffbabe;
+}
+.tag .tag-header>div:hover .tag-remove{
+    display: inline-block;
+}
