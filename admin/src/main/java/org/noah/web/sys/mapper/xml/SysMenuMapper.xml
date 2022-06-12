@@ -39,14 +39,14 @@
 	</sql>
 
 	<select id="selectPageList" resultType="org.noah.web.sys.pojo.menu.SysMenu">
-		select t.*,(select count(1) from sys_menu m2 where m2.parent_id = t.id ) as child_num from sys_menu t
+		select t.*,(select count(1) from sys_menu m2 where m2.parent_id = t.id and m2.flag='1') as child_num from sys_menu t
 		left join sys_menu p on p.id = t.parent_id
 		<include refid="conditions"/>
 		${orderSql}
 	</select>
 
 	<select id="selectChildren" resultType="org.noah.web.sys.pojo.menu.SysMenu">
-		select m.*,(select count(1) from sys_menu m2 where m2.parent_id = m.id ) as child_num from sys_menu m
+		select m.*,(select count(1) from sys_menu m2 where m2.parent_id = m.id and m2.flag='1') as child_num from sys_menu m
 		where m.parent_id = #{pid} and m.flag='1' order by m.order_by, m.id
 	</select>
     <select id="getAllMenuList" resultType="org.noah.web.sys.pojo.menu.SysMenu">
