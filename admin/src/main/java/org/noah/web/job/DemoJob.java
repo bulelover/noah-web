@@ -1,6 +1,5 @@
-package org.noah.job.demo;
+package org.noah.web.job;
 
-import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
  * 要在调度中心，新建调度任务 对新建的任务进行参数配置，运行模式选中 “BEAN模式”，JobHandler属性填写任务注解“@XxlJob”中定义的值；
  */
 @Component
-public class DemoJob{
+public class DemoJob {
 
     /**
      *

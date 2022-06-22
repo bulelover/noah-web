@@ -43,7 +43,6 @@ public class UploadConfig {
         return new MongoStorageService();
     }
 
-    @ConditionalOnProperty(name = "config.storage-type", havingValue = "minio")
     @Bean
     public MinioClient minioStorageClient() {
         return MinioClient.builder()
