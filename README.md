@@ -10,7 +10,7 @@ jdk 1.8
 
 log4j2 2.17.0
 
-fastjson 1.2.80
+fastjson 1.2.83
 
 ## 整合说明
 整合sa-token权限配置
