@@ -27,6 +27,10 @@ fastjson 1.2.83
 
 模块化配置
 
+代码生成器（基于Mybatis Plus）
+
 ## 相关截图
 ![image](https://user-images.githubusercontent.com/49887877/173273551-11bd61a7-1a0a-4c62-b272-4cc8b1d5c58e.png)
 ![image](https://user-images.githubusercontent.com/49887877/173273636-a3358699-8fd7-4be0-b5f4-88121acf97a8.png)
+![image](https://user-images.githubusercontent.com/49887877/175813098-15d6350c-90be-49d3-83c2-fa161addbe7f.png)
+
