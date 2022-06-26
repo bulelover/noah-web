@@ -1,6 +1,5 @@
 package org.noah.web.sys.controller;
 
-
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaMode;
@@ -21,11 +20,14 @@ import org.noah.core.utils.CheckUtils;
 import org.noah.core.pojo.SimpleTreeNode;
 import org.noah.core.pojo.TreeNode;
 import org.noah.web.sys.pojo.menu.*;
+import org.noah.web.sys.service.ISysDictService;
 import org.noah.web.sys.service.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -43,10 +45,28 @@ import java.util.List;
 public class SysMenuController extends BaseController {
 
     private final ISysMenuService sysMenuService;
+    private final ISysDictService sysDictService;
 
     @Autowired
-    public SysMenuController(ISysMenuService sysMenuService) {
+    public SysMenuController(ISysMenuService sysMenuService, ISysDictService sysDictService) {
         this.sysMenuService = sysMenuService;
+        this.sysDictService = sysDictService;
+    }
+
+    @SaCheckLogin
+    @GetMapping("/getLoginData")
+    @ApiOperation(value = "查询菜单信息,权限信息，字典信息")
+    @ApiOperationSupport(order = 1)
+    public BaseResult<Map<String, Object>> getLoginData(){
+        Map<String, Object> res = new HashMap<>();
+        List<SysMenuTreeVO> tree = sysMenuService.getUserMenus(TokenUtils.getLoginUserId());
+        List<TreeNode> menuList = BaseUtils.getTreeList(tree, "");
+        List<String> permissions = sysMenuService.getUserPermissions(TokenUtils.getLoginUserId());
+        Map<String, Object> dictList = sysDictService.getAllDictList();
+        res.put("menuList", menuList);
+        res.put("permissions", permissions);
+        res.put("dictList", dictList);
+        return this.success(res);
     }
 
     @SaCheckLogin

@@ -39,8 +39,6 @@ public class WebMvcConfigureAdapter implements WebMvcConfigurer {
         registry.addInterceptor(loginHandlerInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/public/**")
-                //获取字典
-                .excludePathPatterns("/sys/dict/getAllDictList")
                 .excludePathPatterns("/error/**")
                 .excludePathPatterns("/static/**")
                 .excludePathPatterns("/favicon.ico")

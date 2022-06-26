@@ -23,12 +23,9 @@
   </style>
 </head>
 <body>
-<header>
- <span style="font-size: 2.2rem">欢迎您！</span>
-  <a id="logout" href="#">注销</a>
-</header>
+<#include "layout/header.ftlh">
 <div class="main-container">
-  <div id="mainMenu" class="main-menu"></div>
+  <#include "layout/left_menu.ftlh">
   <div id="mainBody" class="main-body">
     <div id="mainTag" class="tag" style="height: 100%;">
       <div class="tag-header">
@@ -36,7 +33,7 @@
       </div>
       <div class="tag-container" style="height:calc(100% - 40px);">
         <div data-id="index" class="active" style="height:100%;">
-          <div data-toggle="page" data-url="${ctx}/admin/home|welcome" class="page-iframe"></div>
+          <iframe src="${ctx}/admin/sys/menu/list" class="page-iframe"></iframe>
         </div>
       </div>
     </div>
@@ -47,25 +44,7 @@
 <script src="${ctx}/static/js/plugin.js?_v=${version!}"></script>
 <script>
   $(function () {
-    var tag = $('#mainTag').initTag();
-    $('#mainBody').initPlugin();
 
-    $.ajaxAuto('${ctx}/sys/menu/getUserMenuList',{
-      callback: function (data) {
-        $('#frame2').contents().find('body').html(JSON.stringify(data));
-        $('#mainMenu').initTree(data, {
-          onlyOne: true,
-          click: function (data) {
-            if(!$.isEmpty(data.url)){
-              tag.add(data.code, data.name+'<span class="tag-remove iconfont icon-close"></span>',
-                '<div data-toggle="page" data-url="${ctx}/admin/'+data.url.replaceAll('/','|')+'"class="page-iframe"></div>');
-              // $('#mainBody').initPage();
-              tag.goto(data.code);
-            }
-          }
-        });
-      }
-    });
 
 
     $('#logout').on('click', function () {

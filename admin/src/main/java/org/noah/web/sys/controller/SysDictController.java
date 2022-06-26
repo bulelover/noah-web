@@ -53,19 +53,8 @@ public class SysDictController extends BaseController {
     @GetMapping("/getAllDictList")
     @ApiOperation(value = "查询所有字典信息")
     @ApiOperationSupport(order = 1)
-    public BaseResult<Map<String,Object>> getById(){
-        Map<String,Object> res = DictCache.getAllDict();
-        if(res != null){
-            return this.success(res);
-        }
-        res = new HashMap<>();
-        SysDictPage page = new SysDictPage();
-        List<SysDict> list = sysDictService.selectList(page);
-        for(SysDict dict : list){
-            res.put(dict.getCode(), sysDictItemService.selectByDictId(dict.getId()));
-        }
-        DictCache.putAllDict(JSON.toJSONString(res));
-        return this.success(res);
+    public BaseResult<Map<String,Object>> getAllDictList(){
+        return this.success(sysDictService.getAllDictList());
     }
 
     @SaCheckPermission("sys-dict-view")

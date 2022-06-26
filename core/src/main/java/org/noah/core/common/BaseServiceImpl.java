@@ -95,6 +95,7 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T> extends Servic
         TableInfo tableInfo = TableInfoHelper.getTableInfo(this.entityClass);
         BeanUtils.setValue(entity, "createTime", LocalDateTime.now());
         assert user != null;
+        BeanUtils.setValue(entity, "createUserId", user.getId());
         BeanUtils.setValue(entity, "createLoginName", user.getLoginName());
         BeanUtils.setValue(entity, "createRealName", user.getRealName());
         //新增（如果没有设置ID，则自动赋予）
@@ -112,6 +113,7 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T> extends Servic
         LoginUser user = TokenUtils.getLoginUser();
         BeanUtils.setValue(entity, "updateTime", LocalDateTime.now());
         assert user != null;
+        BeanUtils.setValue(entity, "updateUserId", user.getId());
         BeanUtils.setValue(entity, "updateLoginName", user.getLoginName());
         BeanUtils.setValue(entity, "updateRealName", user.getRealName());
         return super.updateById(entity);

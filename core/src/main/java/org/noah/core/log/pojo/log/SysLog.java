@@ -51,6 +51,12 @@ public class SysLog implements Serializable {
     private String transType;
 
     /**
+     * 创建人用户ID
+     */
+    @TableField("CREATE_USER_ID")
+    private String createUserId;
+
+    /**
      * 操作时间
      */
     @TableField("CREATE_TIME")

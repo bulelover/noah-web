@@ -1,12 +1,11 @@
 package org.noah.web.sys.pojo.role;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -62,6 +61,18 @@ public class SysRole implements Serializable {
      */
     @TableField("CREATE_REAL_NAME")
     private String createRealName;
+
+    /**
+     * 创建人用户ID
+     */
+    @TableField("CREATE_USER_ID")
+    private String createUserId;
+
+    /**
+     * 更新人用户ID
+     */
+    @TableField("UPDATE_USER_ID")
+    private String updateUserId;
 
     /**
      * 更新时间

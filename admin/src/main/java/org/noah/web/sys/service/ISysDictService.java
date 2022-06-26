@@ -3,6 +3,8 @@ package org.noah.web.sys.service;
 import org.noah.core.common.IBaseService;
 import org.noah.web.sys.pojo.dict.SysDict;
 
+import java.util.Map;
+
 /**
  * <p>
  * 字典主表 服务类
@@ -14,4 +16,6 @@ import org.noah.web.sys.pojo.dict.SysDict;
 public interface ISysDictService extends IBaseService<SysDict> {
 
     SysDict selectByCode(String code);
+
+    Map<String,Object> getAllDictList();
 }

@@ -82,6 +82,7 @@ public class ParameterFilter implements Filter {
         //这里非web上下文，需要通过request获取
         LoginUser user = TokenUtils.getLoginUser(request);
         if(user != null){
+            log.setCreateUserId(user.getId());
             log.setCreateLoginName(user.getLoginName());
             log.setCreateRealName(user.getRealName());
         }else{

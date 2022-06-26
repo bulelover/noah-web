@@ -1,7 +1,6 @@
 package org.noah.web.sys.pojo.menu;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.noah.core.pojo.TreeNode;
@@ -91,6 +90,18 @@ public class SysMenu extends TreeNode implements Serializable {
      */
     @TableField("CREATE_REAL_NAME")
     private String createRealName;
+
+    /**
+     * 创建人用户ID
+     */
+    @TableField("CREATE_USER_ID")
+    private String createUserId;
+
+    /**
+     * 更新人用户ID
+     */
+    @TableField("UPDATE_USER_ID")
+    private String updateUserId;
 
     /**
      * 更新时间

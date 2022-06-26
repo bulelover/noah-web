@@ -109,6 +109,7 @@ public class LogAspect {
         log.setCreateTime(LocalDateTime.now());
         LoginUser user = TokenUtils.getLoginUser();
         if(user != null){
+            log.setCreateUserId(user.getId());
             log.setCreateLoginName(user.getLoginName());
             log.setCreateRealName(user.getRealName());
         }else{

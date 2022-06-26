@@ -41,10 +41,16 @@
 
     <sql id="conditions">
         <where>
+            t.flag = 1
+            <if test="search != null and search != ''">
+                -- and (t.code like ${r"#{"}search${r"}"}  or t.name like ${r"#{"}search${r"}"})
+            </if>
             <#list table.fields as field>
+            <#if field_index gt 0 && field_index lt 4>
             <if test="${field.propertyName} != null and ${field.propertyName} != ''">
                 and t.${field.name} = ${r"#{"}${field.propertyName}${r"}"}
             </if>
+            </#if>
             </#list>
         </where>
     </sql>

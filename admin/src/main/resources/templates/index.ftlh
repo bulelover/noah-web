@@ -28,14 +28,15 @@
 	<h2>
         ${name} <a target="_self" href="${ctx}/doc.html">点击查看接口文档→</a>
 	</h2>
+	<#--
 	<h3>
         2021年国家统计局地区代码数据抓取
 	</h3>
 	<div>
-<#--        <button onclick="get2021('34.html', 'http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2021/')">获取安徽省数据</button>-->
+&lt;#&ndash;        <button onclick="get2021('34.html', 'http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2021/')">获取安徽省数据</button>&ndash;&gt;
         <button onclick="get2021('51.html', 'http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2021/')">获取四川省数据</button>
-<#--		<button onclick="get2021('34/3401.html', 'http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2021/')">获取合肥市数据</button>-->
-<#--		<button onclick="view()">查看本次数据</button>-->
+&lt;#&ndash;		<button onclick="get2021('34/3401.html', 'http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2021/')">获取合肥市数据</button>&ndash;&gt;
+&lt;#&ndash;		<button onclick="view()">查看本次数据</button>&ndash;&gt;
 		<button onclick="stopGet()">停止</button>
 		<button id="continue" onclick="continueGet()" style="display: none;">继续</button>
 		<button onclick="exportExcel()">导出Excel</button>
@@ -60,6 +61,7 @@
 	</div>
 	<div id="tips" class="box"></div>
 	<div id="container"></div>
+	-->
 </div>
 </body>
 <script src="${ctx}/static/plugins/jquery/jquery-1.11.3.min.js"></script>

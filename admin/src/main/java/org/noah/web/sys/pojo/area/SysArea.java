@@ -1,26 +1,24 @@
-package org.noah.file.pojo.file;
+package org.noah.web.sys.pojo.area;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * <p>
- * 文件信息表
+ * 行政区域表
  * </p>
  *
  * @author Noah
- * @since 2022-01-22
+ * @since 2022-06-26
  */
 @Getter
 @Setter
-@TableName("sys_file")
-public class SysFile implements Serializable {
+@TableName("sys_area")
+public class SysArea implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,44 +28,39 @@ public class SysFile implements Serializable {
     private String id;
 
     /**
-     * 物理路径
+     * 区域编号
      */
-    private String path;
+    private String code;
 
     /**
-     * 文件名
+     * 区域名称
      */
     private String name;
 
     /**
-     * MD5
+     * 父区域编号
      */
-    private String md5;
+    private String pCode;
 
     /**
-     * 文件大小
+     * 区域等级
      */
-    private Long size;
+    private Integer areaLevel;
 
     /**
-     * 文件类型
+     * 父级名称
      */
-    private String type;
+    private String pName;
 
     /**
-     * 内容类型
+     * 地区名称（全）
      */
-    private String contentType;
+    private String areaName;
 
     /**
-     * 业务关联主键
+     * 拼音码
      */
-    private String linkId;
-
-    /**
-     * 业务关联名称
-     */
-    private String linkName;
+    private String pinyin;
 
     /**
      * 创建时间
@@ -85,16 +78,6 @@ public class SysFile implements Serializable {
     private String createRealName;
 
     /**
-     * 创建人用户ID
-     */
-    private String createUserId;
-
-    /**
-     * 更新人用户ID
-     */
-    private String updateUserId;
-
-    /**
      * 更新时间
      */
     private LocalDateTime updateTime;
@@ -110,13 +93,28 @@ public class SysFile implements Serializable {
     private String updateRealName;
 
     /**
+     * 1正常 0禁用
+     */
+    private String state;
+
+    /**
      * 删除标志 1正常 0删除
      */
     private String flag;
 
     /**
-     * 排序字段
+     * 创建人用户ID
      */
-    private Integer orderBy;
+    private String createUserId;
 
+    /**
+     * 更新人用户ID
+     */
+    private String updateUserId;
+
+    /**
+     * 下级数量
+     */
+    @TableField(value = "CHILD_NUM", exist = false)
+    private Integer childNum;
 }

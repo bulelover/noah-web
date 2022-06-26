@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.noah.web.sys.mapper.SysAreaMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    t.ID
+    ,t.CODE
+    ,t.NAME
+    ,t.P_CODE
+    ,t.AREA_LEVEL
+    ,t.P_NAME
+    ,t.AREA_NAME
+    ,t.PINYIN
+    ,t.CREATE_TIME
+    ,t.CREATE_LOGIN_NAME
+    ,t.CREATE_REAL_NAME
+    ,t.UPDATE_TIME
+    ,t.UPDATE_LOGIN_NAME
+    ,t.UPDATE_REAL_NAME
+    ,t.STATE
+    ,t.FLAG
+    ,t.CREATE_USER_ID
+    ,t.UPDATE_USER_ID
+    </sql>
+
+    <sql id="conditions">
+        <where>
+            t.flag = 1
+            <if test="search != null and search != ''">
+                -- and (t.code like #{search}  or t.name like #{search})
+            </if>
+            <if test="code != null and code != ''">
+                and t.CODE = #{code}
+            </if>
+            <if test="name != null and name != ''">
+                and t.NAME = #{name}
+            </if>
+            <if test="pCode != null and pCode != ''">
+                and t.P_CODE = #{pCode}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectPageList" resultType="org.noah.web.sys.pojo.area.SysArea">
+        select <include refid="Base_Column_List"/> from sys_area t
+        <include refid="conditions"/>
+        ${orderSql}
+    </select>
+    <select id="selectChildren" resultType="org.noah.web.sys.pojo.area.SysArea">
+        select m.*,(select count(1) from sys_area m2 where m2.p_code = m.id and m2.flag='1') as child_num from sys_area m
+        where m.p_code = #{pid} and m.flag='1' order by m.id
+    </select>
+
+</mapper>

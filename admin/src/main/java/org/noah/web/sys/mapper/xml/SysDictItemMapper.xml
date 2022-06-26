@@ -38,7 +38,7 @@
 
     <select id="selectByDictId" resultType="org.noah.web.sys.pojo.dict.SysDictItem">
         select <include refid="Base_Column_List"/> from sys_dict_item t
-        where t.dict_id = #{dictId} and t.flag = '1'
+        where t.dict_id = #{dictId} and t.flag = '1' order by t.order_by
     </select>
 
 

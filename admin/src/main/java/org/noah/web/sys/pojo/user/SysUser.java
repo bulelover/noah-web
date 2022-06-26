@@ -77,6 +77,18 @@ public class SysUser implements Serializable {
     private String createRealName;
 
     /**
+     * 创建人用户ID
+     */
+    @TableField("CREATE_USER_ID")
+    private String createUserId;
+
+    /**
+     * 更新人用户ID
+     */
+    @TableField("UPDATE_USER_ID")
+    private String updateUserId;
+
+    /**
      * 更新时间
      */
     @TableField("UPDATE_TIME")
