@@ -31,6 +31,7 @@ public class CodeGenerator {
     private static final String API_TAG = "区划管理";  //接口稳定名称
     private static final int API_SORT = 110;  //接口稳定名称
     private static final String LOG_PREFIX = "系统管理/区划管理";  //日志前缀
+    public static final Boolean HAS_VUE = true; //是否生成前端VUE代码
     public static final String VUE_ROOT = "D:/work/noah/noah-vue"; //vue项目根路径
     public static final String VUE_VIEW_PATH = "/src/views/admin/sys/area"; //生成模块的试图路径
 
@@ -57,9 +58,11 @@ public class CodeGenerator {
         file.put("ListVO.java", "/entityListVO.java.ftl");
         file.put("VO.java", "/entityVO.java.ftl");
         file.put("Page.java", "/entityPage.java.ftl");
-        file.put("List.vue", "/entityList.vue.ftl");
-        file.put("Form.vue", "/entityForm.vue.ftl");
-        file.put("index.js", "/index.js.ftl");
+        if(HAS_VUE){
+            file.put("List.vue", "/entityList.vue.ftl");
+            file.put("Form.vue", "/entityForm.vue.ftl");
+            file.put("index.js", "/index.js.ftl");
+        }
         FastAutoGenerator.create(dscBuilder)
                 // 全局配置
                 .globalConfig((builder) -> builder.author(AUTHOR) //.fileOverride()
@@ -85,18 +88,6 @@ public class CodeGenerator {
                             .controller("/controller.java.ftl")
                             .build();
                 })
-
-//                .injectionConfig((builder) -> builder.beforeOutputFile((tableInfo, objectMap) -> {
-//                            System.out.println("tableInfo: " + tableInfo.getEntityName() + " objectMap: " + objectMap.size());
-//                        })
-//                        .customMap(Collections.singletonMap("test", "baomidou"))
-//                        .customFile(Collections.singletonMap("test.txt", "/templates/test.ftl"))
-//                )
-//                .templateConfig(builder -> {
-//
-//                })
-
-
                 // 策略配置
                 .strategyConfig((builder) -> builder.addInclude(TABLE_NAME).addTablePrefix(PREFIX)
                         .controllerBuilder().superClass(BaseController.class).enableRestStyle()
