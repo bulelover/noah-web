@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.9.RELEASE</version>
+        <version>2.5.8</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.noah</groupId>
@@ -31,6 +31,8 @@
         <module>module/file</module>
         <!-- 定时模块 -->
         <module>module/job</module>
+        <!-- 工作流模块 -->
+        <module>module/flowable</module>
     </modules>
     <dependencies>
         <dependency>
@@ -163,6 +165,12 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.5.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+
 
         <!--常规lang3工具包-->
         <dependency>
@@ -181,13 +189,13 @@
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>1.24.0</version>
+            <version>1.30.0</version>
         </dependency>
         <!-- Sa-Token 整合 Redis （使用jdk默认序列化方式） -->
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis</artifactId>
-            <version>1.24.0</version>
+            <version>1.30.0</version>
         </dependency>
         <!-- 提供Redis连接池 -->
         <dependency>

@@ -13,7 +13,7 @@ import java.util.concurrent.Executor;
 @Configuration
 @EnableAsync
 public class TaskPoolConfig {
-    @Bean("taskExecutor")
+    @Bean("noahTaskExecutor")
     public Executor taskExecutor(){
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setCorePoolSize(10);

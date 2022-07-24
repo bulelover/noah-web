@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="ask_for_leave" name="ask_for_leave" isExecutable="true">
+    <startEvent id="FlowStart" name="开始"/>
+    <userTask id="leaveTask" name="请假" flowable:assignee="#{leaveTask}"/>
+    <sequenceFlow id="sid-e7be8e4b-b8ff-427c-80ab-9f3f0637aba7" sourceRef="FlowStart" targetRef="leaveTask"/>
+    <userTask id="zuzhangTask" name="组长审核" flowable:assignee="#{zuzhangTask}"/>
+    <sequenceFlow id="sid-0efee33b-6e12-42ba-9146-09c1770b5296" sourceRef="leaveTask" targetRef="zuzhangTask"/>
+    <exclusiveGateway id="zuzhangJudeTask"/>
+    <sequenceFlow id="sid-b3726a5c-5944-4e7d-993f-d064ccbade0d" sourceRef="zuzhangTask" targetRef="zuzhangJudeTask"/>
+    <userTask id="managerTask" name="经理审核" flowable:assignee="#{managerTask}"/>
+    <sequenceFlow id="zuzhang_go" sourceRef="zuzhangJudeTask" targetRef="managerTask" name="通过">
+      <conditionExpression xsi:type="tFormalExpression">${checkResult=='通过'}</conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway id="managerJudgeTask"/>
+    <serviceTask id="sendMail" flowable:exclusive="true" name="发送失败提示" isForCompensation="true" flowable:class="org.noah.flowable.demo.AskForLeaveFail"/>
+    <sequenceFlow id="zuzhang_reject" sourceRef="zuzhangJudeTask" targetRef="sendMail" name="拒绝">
+      <conditionExpression xsi:type="tFormalExpression">${checkResult=='拒绝'}</conditionExpression>
+    </sequenceFlow>
+    <endEvent id="flowEnd" name="结束"/>
+    <sequenceFlow id="jingli_success" sourceRef="managerJudgeTask" targetRef="flowEnd" name="通过">
+      <conditionExpression xsi:type="tFormalExpression">${checkResult=='通过'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-dea9421f-bee8-4ea8-9316-4e42d1f0ecca" sourceRef="managerTask" targetRef="managerJudgeTask"/>
+    <sequenceFlow id="jingli_reject" sourceRef="managerJudgeTask" targetRef="sendMail" name="驳回">
+      <conditionExpression xsi:type="tFormalExpression">${checkResult=='拒绝'}</conditionExpression>
+    </sequenceFlow>
+    <endEvent id="Flow-End-Error" name="请假失败"/>
+    <sequenceFlow id="end-error" sourceRef="sendMail" targetRef="Flow-End-Error"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_ask_for_leave">
+    <bpmndi:BPMNPlane bpmnElement="ask_for_leave" id="BPMNPlane_ask_for_leave">
+      <bpmndi:BPMNShape id="shape-c3cec362-7b01-487f-9731-68143fdb1d09" bpmnElement="FlowStart">
+        <omgdc:Bounds x="-980.0" y="-200.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-b0e8cb24-10c3-4ec4-805a-125af0b31c1f" bpmnElement="leaveTask">
+        <omgdc:Bounds x="-895.0" y="-215.0" width="85.0" height="60.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-d1c1615a-3b5e-40c1-ba7b-087fe91c7344" bpmnElement="sid-e7be8e4b-b8ff-427c-80ab-9f3f0637aba7">
+        <omgdi:waypoint x="-950.0" y="-185.0"/>
+        <omgdi:waypoint x="-895.0" y="-185.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-d0a062a3-e60d-4880-9996-aa7d38a948a2" bpmnElement="zuzhangTask">
+        <omgdc:Bounds x="-780.0" y="-215.0" width="90.0" height="60.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-fde76152-7732-4390-8475-d6c725746d15" bpmnElement="sid-0efee33b-6e12-42ba-9146-09c1770b5296">
+        <omgdi:waypoint x="-810.0" y="-185.0"/>
+        <omgdi:waypoint x="-780.0" y="-185.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-5751bbe3-bd6f-48fb-84d3-d1b1f127fc4d" bpmnElement="zuzhangJudeTask">
+        <omgdc:Bounds x="-640.0001" y="-205.00002" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-e83a4eda-3c18-4495-afbd-4c6b5610fe24" bpmnElement="sid-b3726a5c-5944-4e7d-993f-d064ccbade0d">
+        <omgdi:waypoint x="-690.0" y="-185.0"/>
+        <omgdi:waypoint x="-640.0001" y="-185.00002"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="sid-be5eaa42-dc1a-4ce3-bbed-a0b2bf92f2e9" bpmnElement="managerTask">
+        <omgdc:Bounds x="-558.02344" y="-215.0" width="90.0" height="60.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-f434f501-faac-46ba-9d8a-f05c68cfae17" bpmnElement="zuzhang_go">
+        <omgdi:waypoint x="-600.0001" y="-185.00003"/>
+        <omgdi:waypoint x="-558.02344" y="-185.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="sid-b6b3b4bb-bedb-497a-827e-3a30711ac30d" bpmnElement="managerJudgeTask">
+        <omgdc:Bounds x="-411.77344" y="-205.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-84787468-d696-4641-a6b1-7f64cb329b63" bpmnElement="sendMail">
+        <omgdc:Bounds x="-662.49994" y="-105.0" width="85.0" height="55.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-1f19441c-06e3-4132-9a33-053a0530a350" bpmnElement="zuzhang_reject">
+        <omgdi:waypoint x="-620.0001" y="-165.00002"/>
+        <omgdi:waypoint x="-620.0" y="-135.0"/>
+        <omgdi:waypoint x="-619.99994" y="-105.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-d5056378-ef0b-4fe3-91a3-3060e78fc347" bpmnElement="flowEnd">
+        <omgdc:Bounds x="-325.0" y="-200.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-38cff0fd-c2ca-40b7-bf9f-047fa9ee1dea" bpmnElement="jingli_success">
+        <omgdi:waypoint x="-371.77344" y="-185.0"/>
+        <omgdi:waypoint x="-356.77344" y="-184.99998"/>
+        <omgdi:waypoint x="-325.0" y="-185.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-21519fcf-2618-43c4-ad9f-dd4d55a51c63" bpmnElement="sid-dea9421f-bee8-4ea8-9316-4e42d1f0ecca">
+        <omgdi:waypoint x="-468.02344" y="-185.0"/>
+        <omgdi:waypoint x="-411.77344" y="-185.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-930ede3a-eef6-46cb-80ff-38d8e3d5903a" bpmnElement="jingli_reject">
+        <omgdi:waypoint x="-391.77344" y="-165.0"/>
+        <omgdi:waypoint x="-391.77344" y="-78.75"/>
+        <omgdi:waypoint x="-578.0357" y="-78.75"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="sid-23f059e7-602e-4d6e-ac73-1e7170aeece7" bpmnElement="Flow-End-Error">
+        <omgdc:Bounds x="-767.1411" y="-92.5" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-fe5aef2f-4e56-4964-8286-1d7eea6b30a7" bpmnElement="end-error">
+        <omgdi:waypoint x="-662.49994" y="-77.5"/>
+        <omgdi:waypoint x="-737.1411" y="-77.5"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

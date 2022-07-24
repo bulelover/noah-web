@@ -38,6 +38,11 @@
             <artifactId>job</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.noah</groupId>
+            <artifactId>flowable</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

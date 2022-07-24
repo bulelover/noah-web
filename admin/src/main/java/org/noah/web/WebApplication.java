@@ -1,5 +1,7 @@
 package org.noah.web;
 
+import org.flowable.spring.boot.FlowableSecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,9 +13,10 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication(scanBasePackages={ "org.noah"},
         exclude = {
 //                DruidDataSourceAutoConfigure.class,
-                org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
+                SecurityAutoConfiguration.class,
                 MongoAutoConfiguration.class,
-                MongoDataAutoConfiguration.class
+                MongoDataAutoConfiguration.class,
+                FlowableSecurityAutoConfiguration.class
         }
 )
 @MapperScan({"org.noah.**.mapper"})

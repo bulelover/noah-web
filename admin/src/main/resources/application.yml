@@ -1,0 +1,61 @@
+spring:
+  mvc:
+    async:
+      #设置接口超时时间
+      request-timeout: 50000
+  servlet:
+    multipart:
+      max-request-size: 25MB
+      max-file-size: 20MB
+
+  #freemarker配置
+  freemarker:
+    request-context-attribute: req
+  profiles:
+    active: run
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml,classpath*:org/noah/**/mapper/xml/*.xml
+
+j2cache:
+  config-location: classpath:j2cache.properties
+
+#sa-token 配置
+sa-token:
+  # token名称 (同时也是cookie名称)
+  token-name: noah-token
+  # token有效期，单位s 默认30天, -1代表永不过期
+  timeout: -1
+  # token临时有效期 (指定时间内无操作就视为token过期) 单位': '秒
+  activity-timeout: 86400
+  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+  is-share: false
+  # token风格
+  token-style: uuid
+  # 是否输出操作日志
+  is-log: false
+
+#knife4配置
+knife4j:
+  #开启Knife4j增强模式
+  enable: true
+  # 开启生产环境屏蔽 (true)
+  production: false
+  setting:
+    enableDocumentManage: true
+    enableSwaggerModels: false
+  # RequestMapping 会产生多个相同的接口（不同请求方式GET,POST,PUT...） 这里可以开启合并
+  # 由于本项目采用的是RestFul风格接口，所以关闭
+    enableFilterMultipartApis: false
+    enableDynamicParameter: true
+  documents:
+    -
+      group: V1.0
+      name: 系统说明
+      locations: classpath:markdown/*
+  #给文档设置访问的用户密码
+  #knife4j.basic.enable: true
+  #knife4j.basic.username: test
+  #knife4j.basic.password: 123

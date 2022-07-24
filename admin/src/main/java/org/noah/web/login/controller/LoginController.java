@@ -70,6 +70,12 @@ public class LoginController extends BaseController {
         return success(StpUtil.getTokenInfo());
     }
 
+    @ApiOperation(value = "获取登录token信息")
+    @GetMapping("/getTokenInfo")
+    public BaseResult<SaTokenInfo> getTokenInfo() {
+        return success(StpUtil.getTokenInfo());
+    }
+
     private SysUser checkUser(String username, String password) {
         SysUser user = this.sysUserService.getByLoginName(username);
         if (user == null) {

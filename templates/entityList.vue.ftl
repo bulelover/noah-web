@@ -15,7 +15,7 @@
 				</div>
 			</div>
 			<el-table ref="table" border :data="tableData" v-loading="tableLoading" row-key="id"
-								:height="g.tableHeight">
+								:height="G.tableHeight">
 				<el-table-column label="序号" width="50" type="index" align="center" show-overflow-tooltip
 				                 :index="(searchForm.current-1)*searchForm.size+1"></el-table-column>
 	<#-- ----------  BEGIN 字段循环遍历  ---------->
