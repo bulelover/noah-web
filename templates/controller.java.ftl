@@ -95,7 +95,7 @@ public class ${table.controllerName} {
     @Log("修改")
     @ApiOperation(value = "修改${tableDesc!}信息")
     @ApiOperationSupport(order = 36)
-    @PutMapping("/save")
+    @PostMapping("/save")
     public BaseResult<String> edit(${entity}VO vo){
         //校验参数
         CheckUtils.checkAllFields(vo).checkError();
@@ -110,7 +110,7 @@ public class ${table.controllerName} {
         @ApiImplicitParam(name = "id",value = "${tableDesc!}ID", required = true)
     })
     @ApiOperationSupport(order = 40)
-    @DeleteMapping("/removeById")
+    @PostMapping("/removeById")
     public BaseResult<String> removeById(@RequestParam(required = false) String id){
         //校验ID不可为空
         CheckUtils.init().set(id, "ID").required().checkError();

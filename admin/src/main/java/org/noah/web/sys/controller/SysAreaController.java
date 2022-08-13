@@ -82,7 +82,7 @@ public class SysAreaController extends BaseController {
     @Log("新增")
     @ApiOperation(value = "新增区划信息")
     @ApiOperationSupport(order = 30, ignoreParameters = {"id"})
-    @PostMapping("/save")
+    @PostMapping("/add")
     public BaseResult<String> add(SysAreaVO vo){
         //校验参数, id不用传
         CheckUtils.checkExcludeFields(vo, "id").checkError();
@@ -96,7 +96,7 @@ public class SysAreaController extends BaseController {
     @Log("修改")
     @ApiOperation(value = "修改区划信息")
     @ApiOperationSupport(order = 36)
-    @PutMapping("/save")
+    @PostMapping("/edit")
     public BaseResult<String> edit(SysAreaVO vo){
         //校验参数
         CheckUtils.checkAllFields(vo).checkError();
@@ -111,7 +111,7 @@ public class SysAreaController extends BaseController {
         @ApiImplicitParam(name = "id",value = "区划ID", required = true)
     })
     @ApiOperationSupport(order = 40)
-    @DeleteMapping("/removeById")
+    @PostMapping("/removeById")
     public BaseResult<String> removeById(@RequestParam(required = false) String id){
         //校验ID不可为空
         CheckUtils.init().set(id, "ID").required().checkError();

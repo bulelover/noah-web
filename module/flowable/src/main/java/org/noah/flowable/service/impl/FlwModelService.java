@@ -87,6 +87,7 @@ public class FlwModelService implements IFlwModelService {
     @Transactional(
             rollbackFor = {Exception.class}
     )
+    @Override
     public boolean deleteModel(String id) {
         if (StringUtils.isEmpty(id)) {
             throw new FlowableException("请选择需删除流程");
@@ -94,6 +95,9 @@ public class FlwModelService implements IFlwModelService {
             Model model = (Model)this.repositoryService.createModelQuery().modelId(id).singleResult();
             if (!StringUtils.isEmpty(model.getDeploymentId())) {
                 throw new FlowableException("流程已发布，无法删除");
+//                this.repositoryService.deleteDeployment(model.getDeploymentId());
+//                this.repositoryService.deleteModel(id);
+//                return true;
             } else {
                 this.repositoryService.deleteModel(id);
                 return true;
@@ -104,33 +108,37 @@ public class FlwModelService implements IFlwModelService {
     @Transactional(
             rollbackFor = {Exception.class}
     )
-    public boolean deployModel(String id) {
+    @Override
+    public void deployModel(String id) {
         if (StringUtils.isEmpty(id)) {
             throw new FlowableException("请选择需发布流程");
-        } else {
-            ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();;
-            ProcessEngineConfiguration configuration = processEngine.getProcessEngineConfiguration();
-            Model model = repositoryService.getModel(id);
-            if (model == null) {
-                throw new FlowableObjectNotFoundException("找不到id为 '" + id + "'模型", Model.class);
-            } else if (model.getDeploymentId() != null && model.getDeploymentId().length() > 0) {
-                throw new FlowableException("当前模型已经发布，不可删除！");
-            } else if (!model.hasEditorSource()) {
-                throw new FlowableObjectNotFoundException("id 为'" + id + "' 的模型没有可用的资源。", String.class);
-            } else {
-                byte[] bpmnBytes = repositoryService.getModelEditorSource(id);
-                String fileName = model.getId() + ".bpmn20.xml";
-                Deployment deploy = repositoryService.createDeployment().name(model.getName()).category(model.getCategory()).tenantId(model.getTenantId()).addBytes(fileName, bpmnBytes).deploy();
-                if (deploy != null) {
-                    model.setDeploymentId(deploy.getId());
-                    repositoryService.saveModel(model);
-                    ProcessDefinition processDef = this.repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
-                    this.repositoryService.setProcessDefinitionCategory(processDef.getId(), deploy.getCategory());
-                }else{
-                    throw new FlowableException("模型发布失败！");
-                }
-            }
-            return true;
+        }
+
+        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();;
+        ProcessEngineConfiguration configuration = processEngine.getProcessEngineConfiguration();
+        Model model = repositoryService.getModel(id);
+
+        if (model == null) {
+            throw new FlowableObjectNotFoundException("找不到id为 '" + id + "'模型", Model.class);
+        }
+
+        if (model.getDeploymentId() != null && model.getDeploymentId().length() > 0) {
+            throw new FlowableException("当前模型已经发布！");
+        }
+
+        if (!model.hasEditorSource()) {
+            throw new FlowableObjectNotFoundException("id 为'" + id + "' 的模型没有可用的资源。", String.class);
+        }
+        byte[] bpmnBytes = repositoryService.getModelEditorSource(id);
+        String fileName = model.getId() + ".bpmn20.xml";
+        Deployment deploy = repositoryService.createDeployment().name(model.getName()).category(model.getCategory()).tenantId(model.getTenantId()).addBytes(fileName, bpmnBytes).deploy();
+        if (deploy != null) {
+            model.setDeploymentId(deploy.getId());
+            repositoryService.saveModel(model);
+            ProcessDefinition processDef = this.repositoryService.createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();
+            this.repositoryService.setProcessDefinitionCategory(processDef.getId(), deploy.getCategory());
+        }else{
+            throw new FlowableException("模型发布失败！");
         }
     }
 

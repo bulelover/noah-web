@@ -132,7 +132,7 @@ public class SysMenuController extends BaseController {
     @Log("新增")
     @ApiOperation(value = "新增菜单信息")
     @ApiOperationSupport(order = 30, ignoreParameters = {"id"})
-    @PostMapping("/save")
+    @PostMapping("/add")
     public BaseResult<String> add(SysMenuVO vo){
         //校验参数,id不用传
         CheckUtils.checkExcludeFields(vo, "id").checkError();
@@ -144,7 +144,7 @@ public class SysMenuController extends BaseController {
     @Log("修改")
     @ApiOperation(value = "修改菜单信息")
     @ApiOperationSupport(order = 31)
-    @PutMapping("/save")
+    @PostMapping("/edit")
     public BaseResult<String> edit(SysMenuVO vo){
         //校验参数
         CheckUtils.checkAllFields(vo).checkError();
@@ -157,7 +157,7 @@ public class SysMenuController extends BaseController {
     @ApiOperation(value = "启用菜单")
     @ApiImplicitParam(name = "id",value = "菜单ID")
     @ApiOperationSupport(order = 34)
-    @PutMapping("/enable")
+    @PostMapping("/enable")
     public BaseResult<String> enable(@RequestParam(required = false) String id){
         CheckUtils.init().set(id, "ID").required().checkError();
         return this.result(this.sysMenuService.enable(id));
@@ -170,7 +170,7 @@ public class SysMenuController extends BaseController {
             @ApiImplicitParam(name = "id",value = "菜单ID", required = true)
     })
     @ApiOperationSupport(order = 35)
-    @PutMapping("/disable")
+    @PostMapping("/disable")
     public BaseResult<String> disable(@RequestParam(required = false) String id){
         CheckUtils.init().set(id, "ID").required().checkError();
         return this.result(this.sysMenuService.disable(id));
@@ -183,7 +183,7 @@ public class SysMenuController extends BaseController {
             @ApiImplicitParam(name = "id",value = "菜单ID", required = true)
     })
     @ApiOperationSupport(order = 35)
-    @DeleteMapping("/removeById")
+    @PostMapping("/removeById")
     public BaseResult<String> removeById(@RequestParam(required = false) String id){
         CheckUtils.init().set(id, "ID").required().checkError();
         return this.result(this.sysMenuService.removeLogicById(id));

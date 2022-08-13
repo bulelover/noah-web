@@ -89,7 +89,7 @@ public class SysUserController extends BaseController {
     @Log("修改个人信息")
     @ApiOperation(value = "修改个人信息")
     @ApiOperationSupport(order = 31, ignoreParameters = {"loginName","state"})
-    @PutMapping("/savePersonal")
+    @PostMapping("/savePersonal")
     public BaseResult<String> savePersonal(SysUserVO vo){
         //校验参数 修改个人信息 不用传登录用户名和状态
         CheckUtils.checkExcludeFields(vo,
@@ -106,7 +106,7 @@ public class SysUserController extends BaseController {
             @ApiImplicitParam(name = "id",value = "用户ID", required = true),
             @ApiImplicitParam(name = "imgId",value = "头像ID")
     })
-    @PutMapping("/saveImg")
+    @PostMapping("/saveImg")
     public BaseResult<String> saveImg(@RequestParam("id") String id, @RequestParam("imgId")  String imgId){
         this.sysUserService.updateImg(id, imgId);
         return this.result(true);
@@ -116,7 +116,7 @@ public class SysUserController extends BaseController {
     @Log("新增")
     @ApiOperation(value = "新增用户信息")
     @ApiOperationSupport(order = 30, ignoreParameters = {"id"})
-    @PostMapping("/save")
+    @PostMapping("/add")
     public BaseResult<String> add(SysUserVO vo){
         //校验参数, id不用传
         CheckUtils.checkExcludeFields(vo, "id").checkError();
@@ -128,7 +128,7 @@ public class SysUserController extends BaseController {
     @Log("修改")
     @ApiOperation(value = "修改用户信息")
     @ApiOperationSupport(order = 31, ignoreParameters = {"loginName"})
-    @PutMapping("/save")
+    @PostMapping("/edit")
     public BaseResult<String> edit(SysUserVO vo){
         //校验参数 更新用户 不用传登录用户名
         CheckUtils.checkExcludeFields(vo, BeanUtils.getPropertyName(SysUser::getLoginName)).checkError();
@@ -141,7 +141,7 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "启用用户")
     @ApiImplicitParam(name = "id",value = "用户ID")
     @ApiOperationSupport(order = 34)
-    @PutMapping("/enable")
+    @PostMapping("/enable")
     public BaseResult<String> enable(@RequestParam(required = false) String id){
         CheckUtils.init().set(id, "ID").required().checkError();
         return this.result(this.sysUserService.enable(id));
@@ -155,13 +155,13 @@ public class SysUserController extends BaseController {
             @ApiImplicitParam(name = "reason",value = "原因")
     })
     @ApiOperationSupport(order = 35)
-    @PutMapping("/disable")
+    @PostMapping("/disable")
     public BaseResult<String> disable(@RequestParam(required = false) String id,
                                       @RequestParam(required = false) String reason){
         CheckUtils.init().set(id, "ID").required().checkError();
         boolean r = this.sysUserService.disable(id, reason);
         if(r){
-            StpUtil.logoutByLoginId(id);
+            StpUtil.logout(id);
         }
         return this.result(r);
     }
@@ -173,12 +173,12 @@ public class SysUserController extends BaseController {
             @ApiImplicitParam(name = "id",value = "用户ID", required = true)
     })
     @ApiOperationSupport(order = 36)
-    @DeleteMapping("/removeById")
+    @PostMapping("/removeById")
     public BaseResult<String> removeById(@RequestParam(required = false) String id){
         CheckUtils.init().set(id, "ID").required().checkError();
         boolean r = this.sysUserService.removeLogicById(id);
         if(r){
-            StpUtil.logoutByLoginId(id);
+            StpUtil.logout(id);
         }
         return this.result(r);
     }

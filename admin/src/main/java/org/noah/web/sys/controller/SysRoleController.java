@@ -81,7 +81,7 @@ public class SysRoleController extends BaseController {
     @Log("新增")
     @ApiOperation(value = "新增角色信息")
     @ApiOperationSupport(order = 30, ignoreParameters = {"id"})
-    @PostMapping("/save")
+    @PostMapping("/add")
     public BaseResult<String> add(SysRoleVO vo){
         //校验参数, id不用传
         CheckUtils.checkExcludeFields(vo, "id").checkError();
@@ -93,7 +93,7 @@ public class SysRoleController extends BaseController {
     @Log("修改")
     @ApiOperation(value = "修改角色信息")
     @ApiOperationSupport(order = 31)
-    @PutMapping("/save")
+    @PostMapping("/edit")
     public BaseResult<String> edit(SysRoleVO vo){
         //校验参数 更新角色 不用传登录角色名
         CheckUtils.checkAllFields(vo).checkError();
@@ -106,7 +106,7 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "启用角色")
     @ApiImplicitParam(name = "id",value = "角色ID")
     @ApiOperationSupport(order = 34)
-    @PutMapping("/enable")
+    @PostMapping("/enable")
     public BaseResult<String> enable(@RequestParam(required = false) String id){
         CheckUtils.init().set(id, "ID").required().checkError();
         return this.result(this.sysRoleService.enable(id));
@@ -119,7 +119,7 @@ public class SysRoleController extends BaseController {
             @ApiImplicitParam(name = "id",value = "角色ID", required = true)
     })
     @ApiOperationSupport(order = 35)
-    @PutMapping("/disable")
+    @PostMapping("/disable")
     public BaseResult<String> disable(@RequestParam(required = false) String id){
         CheckUtils.init().set(id, "ID").required().checkError();
         return this.result(this.sysRoleService.disable(id));
@@ -132,7 +132,7 @@ public class SysRoleController extends BaseController {
             @ApiImplicitParam(name = "id",value = "角色ID", required = true)
     })
     @ApiOperationSupport(order = 35)
-    @DeleteMapping("/removeById")
+    @PostMapping("/removeById")
     public BaseResult<String> removeById(@RequestParam(required = false) String id){
         CheckUtils.init().set(id, "ID").required().checkError();
         return this.result(this.sysRoleService.removeLogicById(id));

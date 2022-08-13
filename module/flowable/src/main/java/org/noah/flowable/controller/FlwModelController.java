@@ -59,4 +59,22 @@ public class FlwModelController extends BaseController {
     public BaseResult<String> save(ModelSaveVO vo){
         return this.success(iFlwModelService.save(vo));
     }
+
+    @SaCheckPermission("flw-model-delete")
+    @PostMapping("/removeById")
+    @ApiOperation(value = "删除工作流模型")
+    @ApiOperationSupport(order = 30)
+    public BaseResult<String> delete(String id){
+        iFlwModelService.deleteModel(id);
+        return this.success();
+    }
+
+    @SaCheckPermission("flw-model-deploy")
+    @PostMapping("/deploy")
+    @ApiOperation(value = "部署发布")
+    @ApiOperationSupport(order = 30)
+    public BaseResult<String> deploy(String id){
+        iFlwModelService.deployModel(id);
+        return this.success();
+    }
 }

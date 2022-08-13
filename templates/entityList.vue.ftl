@@ -11,7 +11,7 @@
 					</el-form>
 				</div>
 				<div>
-					<el-button v-if="$perms.has('${permission!}-add')" type="primary" @click="add">新增</el-button>
+					<el-button v-if="G.hasPerm('${permission!}-add')" type="primary" @click="add">新增</el-button>
 				</div>
 			</div>
 			<el-table ref="table" border :data="tableData" v-loading="tableLoading" row-key="id"
@@ -24,7 +24,7 @@
 			<#if field_index == 1>
 				<el-table-column prop="${field.propertyName}" label="${(field.comment!?length gt 0)?then(field.comment,'未定义')}" min-width="120" show-overflow-tooltip>
 					<template v-slot="{row}">
-						<el-link type="primary" v-if="$perms.has('${permission!}-view')"
+						<el-link type="primary" v-if="G.hasPerm('${permission!}-view')"
 										 :underline="false" @click="view(row)">{{ row.${field.propertyName} }}
 						</el-link>
 						<template v-else>{{ row.${field.propertyName} }}</template>
@@ -38,12 +38,12 @@
 	</#list>
 	<#------------  END 字段循环遍历  ---------->
 				<el-table-column label="操作" width="200" class-name="link-menu" fixed="right"
-          v-if="$perms.has('${permission!}-edit') || $perms.has('${permission!}-delete')">
+          v-if="G.hasPerm('${permission!}-edit') || G.hasPerm('${permission!}-delete')">
 					<template v-slot="{row}">
-						<el-link v-if="$perms.has('${permission!}-edit')" :underline="false" type="primary" @click="edit(row)">
+						<el-link v-if="G.hasPerm('${permission!}-edit')" :underline="false" type="primary" @click="edit(row)">
 							修改
 						</el-link>
-						<el-link v-if="$perms.has('${permission!}-delete')" :underline="false" type="danger" @click="del(row)">
+						<el-link v-if="G.hasPerm('${permission!}-delete')" :underline="false" type="danger" @click="del(row)">
 							删除
 						</el-link>
 					</template>

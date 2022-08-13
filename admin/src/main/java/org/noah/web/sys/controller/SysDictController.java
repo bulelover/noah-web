@@ -84,7 +84,7 @@ public class SysDictController extends BaseController {
     @Log("新增")
     @ApiOperation(value = "新增字典信息")
     @ApiOperationSupport(order = 30, ignoreParameters = {"id"})
-    @PostMapping("/save")
+    @PostMapping("/add")
     public BaseResult<String> add(SysDictVO vo){
         //校验参数,id不用传
         CheckUtils.checkExcludeFields(vo, "id").checkError();
@@ -96,7 +96,7 @@ public class SysDictController extends BaseController {
     @Log("修改")
     @ApiOperation(value = "修改字典信息")
     @ApiOperationSupport(order = 31)
-    @PutMapping("/save")
+    @PostMapping("/edit")
     public BaseResult<String> edit(SysDictVO vo){
         //校验参数
         CheckUtils.checkAllFields(vo).checkError();
@@ -111,7 +111,7 @@ public class SysDictController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "字典ID", required = true)
     })
-    @DeleteMapping("/removeById")
+    @PostMapping("/removeById")
     public BaseResult<String> removeById(String id){
         CheckUtils.init().set(id, "ID").required().checkError();
         DictCache.removeAllDict();
@@ -145,7 +145,7 @@ public class SysDictController extends BaseController {
     @Log("新增字典项")
     @ApiOperation(value = "新增字典项信息")
     @ApiOperationSupport(order = 54, ignoreParameters = {"id"})
-    @PostMapping("/saveItem")
+    @PostMapping("/addItem")
     public BaseResult<String> add(SysDictItemVO vo){
         //校验参数,id不用传
         CheckUtils.checkExcludeFields(vo, "id").checkError();
@@ -158,7 +158,7 @@ public class SysDictController extends BaseController {
     @Log("修改字典项")
     @ApiOperation(value = "修改字典项信息")
     @ApiOperationSupport(order = 56)
-    @PutMapping("/saveItem")
+    @PostMapping("/editItem")
     public BaseResult<String> edit(SysDictItemVO vo){
         //校验参数
         CheckUtils.checkAllFields(vo).checkError();
@@ -174,7 +174,7 @@ public class SysDictController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "字典项ID", required = true)
     })
-    @DeleteMapping("/removeByItemId")
+    @PostMapping("/removeByItemId")
     public BaseResult<String> removeByItemId(String id){
         CheckUtils.init().set(id, "ID").required().checkError();
         DictCache.removeAllDict();

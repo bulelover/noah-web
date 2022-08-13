@@ -5,6 +5,7 @@ import org.noah.core.common.PageResult;
 import org.noah.flowable.pojo.model.FlwModelPage;
 import org.noah.flowable.pojo.model.ModelSaveVO;
 import org.noah.flowable.pojo.model.ModelVO;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 工作流模型设计Service
@@ -22,6 +23,16 @@ public interface IFlwModelService {
      * @return 结果
      */
     PageResult<ModelVO> selectPage(FlwModelPage page);
+
+    @Transactional(
+            rollbackFor = {Exception.class}
+    )
+    boolean deleteModel(String id);
+
+    @Transactional(
+            rollbackFor = {Exception.class}
+    )
+    void deployModel(String id);
 
     String save(ModelSaveVO model);
 

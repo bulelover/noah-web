@@ -39,7 +39,10 @@ class WebApplicationTests {
         runtimeService.setVariable(processInstance.getId(), "name", "javaboy");
         runtimeService.setVariable(processInstance.getId(), "reason", "休息一下");
         runtimeService.setVariable(processInstance.getId(), "days", 10);
+//        runtimeService.getVariables(processInstance.getId());
         System.out.println("创建请假流程 processId：" + processInstance.getId());
+        List<Task> list = taskService.createTaskQuery().taskAssignee(staffId).orderByTaskId().desc().list();
+//        list.get(0).getProcessInstanceId()
         //a45e0600-09d6-11ed-a70e-701ab81c148e
     }
 
