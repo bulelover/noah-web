@@ -40,6 +40,12 @@ public class SysUserPage extends BasePage<SysUser> {
     @ApiModelProperty(value = "职位岗位|模糊", position = 180)
     private String position;
 
+    @ApiModelProperty(value = "部门主键", position = 224)
+    private String departmentId;
+
+    @ApiModelProperty(value = "组织机构主键", position = 220)
+    private String orgId;
+
     //======= 模糊查询配置 这样配置可以适配不同的数据库（不使用数据库拼接） =======
     public String getLoginName() {
         return this.getLikeSql(loginName);

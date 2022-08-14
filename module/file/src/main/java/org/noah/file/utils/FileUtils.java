@@ -95,6 +95,8 @@ public class FileUtils {
         response.addHeader("Content-Disposition", "inline;filename=" + new String(fileName.getBytes(),
                 StandardCharsets.ISO_8859_1));
         response.addHeader("Content-Length", "" + buffer.length);
+        //将图片缓存起来
+        response.addHeader("Cache-Control","max-age=604800");
         OutputStream toClient = response.getOutputStream();
         toClient.write(buffer);
         toClient.flush();

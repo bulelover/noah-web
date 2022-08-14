@@ -25,9 +25,9 @@ public class CustomExceptionHandler {
     @ExceptionHandler(Exception.class)
     public BaseResult<String> handleGlobalException(Exception e){
         log.error("出现全局异常错误:{}", e.getMessage());
-        if(log.isDebugEnabled()){
+//        if(log.isDebugEnabled()){
             e.printStackTrace();
-        }
+//        }
         return BaseResult.failure(e.getMessage() == null?e.toString():e.getMessage());
     }
 

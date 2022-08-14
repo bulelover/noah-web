@@ -38,44 +38,5 @@ public class DateTimeConfig {
     private static final String TIME_FORMAT = "HH:mm:ss";
 
 
-    @Bean
-    @Primary
-    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-        return builder -> builder.serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT)))
-                .serializerByType(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DATE_FORMAT)))
-                .serializerByType(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(TIME_FORMAT)))
-                .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT)))
-                .deserializerByType(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(DATE_FORMAT)))
-                .deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(TIME_FORMAT)));
-    }
 
-
-    @Bean
-    public Converter<String, LocalDate> localDateConvert() {
-        return new Converter<String, LocalDate>() {
-            @Override
-            public LocalDate convert(String source) {
-                return LocalDate.parse(source, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            }
-        };
-    }
-
-    @Bean
-    public Converter<String, LocalDateTime> localDateTimeConvert() {
-        return new Converter<String, LocalDateTime>() {
-            @Override
-            public LocalDateTime convert(String source) {
-                if(!StringUtils.hasText(source)){
-                    return null;
-                }
-                if(source.length() == 10){
-                    source += " 00:00:00";
-                }
-                if(source.length() == 16){
-                    source += ":00";
-                }
-                return LocalDateTime.parse(source, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            }
-        };
-    }
 }

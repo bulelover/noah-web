@@ -9,9 +9,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -20,7 +23,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -94,8 +101,8 @@ public class WebMvcConfigureAdapter implements WebMvcConfigurer {
     /**
      * 配置消息转换器--这里我用的是alibaba 开源的 fastjson
      */
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+    @Bean
+    public HttpMessageConverter<?> fastJsonHttpMessageConverter() {
         //1.需要定义一个convert转换消息的对象;
         FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
         //2.添加fastJson的配置信息，比如：是否要格式化返回的json数据;
@@ -112,8 +119,53 @@ public class WebMvcConfigureAdapter implements WebMvcConfigurer {
         //4.在convert中添加配置信息.
         fastJsonHttpMessageConverter.setSupportedMediaTypes(fastMediaTypes);
         fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
-        //5.将convert添加到converters当中.
-        converters.add(fastJsonHttpMessageConverter);
+        //该设置目的，为了兼容jackson
+        fastJsonHttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON,
+                MediaType.APPLICATION_JSON_UTF8,MediaType.APPLICATION_OCTET_STREAM,MediaType.APPLICATION_FORM_URLENCODED));
+        return fastJsonHttpMessageConverter;
+    }
+
+    @Override
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(0, fastJsonHttpMessageConverter());
+        for (HttpMessageConverter<?> messageConverter : converters) {
+            System.out.println(messageConverter);
+        }
+    }
+
+    @Bean
+    public Converter<String, LocalDate> stringToLocalDateConvert() {
+        return new Converter<String, LocalDate>() {
+            @Override
+            public LocalDate convert(String source) {
+                return LocalDate.parse(source, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            }
+        };
+    }
+
+    @Bean
+    public Converter<String, LocalDateTime> stringToLocalDateTimeConverter(){
+        return new Converter<String, LocalDateTime>() {
+            @Override
+            public LocalDateTime convert(String source) {
+                if(!StringUtils.hasText(source)){
+                    return null;
+                }
+                if(source.length() == 10){
+                    source += " 00:00:00";
+                }
+                if(source.length() == 16){
+                    source += ":00";
+                }
+                return LocalDateTime.parse(source, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            }
+        };
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(stringToLocalDateConvert());
+        registry.addConverter(stringToLocalDateTimeConverter());
     }
 
 }

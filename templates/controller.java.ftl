@@ -83,7 +83,7 @@ public class ${table.controllerName} {
     @Log("新增")
     @ApiOperation(value = "新增${tableDesc!}信息")
     @ApiOperationSupport(order = 30, ignoreParameters = {"id"})
-    @PostMapping("/save")
+    @PostMapping("/add")
     public BaseResult<String> add(${entity}VO vo){
         //校验参数, id不用传
         CheckUtils.checkExcludeFields(vo, "id").checkError();
@@ -95,7 +95,7 @@ public class ${table.controllerName} {
     @Log("修改")
     @ApiOperation(value = "修改${tableDesc!}信息")
     @ApiOperationSupport(order = 36)
-    @PostMapping("/save")
+    @PostMapping("/edit")
     public BaseResult<String> edit(${entity}VO vo){
         //校验参数
         CheckUtils.checkAllFields(vo).checkError();

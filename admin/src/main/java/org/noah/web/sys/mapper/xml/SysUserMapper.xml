@@ -32,17 +32,41 @@
         <if test="position != null and position != ''">
             and t.position like #{position}
         </if>
+        <if test="departmentId != null and departmentId != ''">
+            and t.departmentId = #{departmentId}
+        </if>
+        <if test="orgId != null and orgId != ''">
+            and t.orgId = #{orgId}
+        </if>
         </where>
     </sql>
 
+    <sql id="columns">
+        select t.*, u2.real_name DIRECT_SUPERIOR_NAME,o.name ORG_NAME,d.name DEPARTMENT_NAME from sys_user t
+    </sql>
+    <sql id="joins">
+        left join sys_user u2 on t.direct_superior = u2.id
+        left join sys_org o on t.org_id = o.id
+        left join sys_department d on t.department_id = d.id
+    </sql>
+
+    <select id="selectById" resultType="org.noah.web.sys.pojo.user.SysUser">
+        <include refid="columns"/>
+        <include refid="joins"/>
+        where t.id = #{id}
+    </select>
+
     <select id="selectPageList" resultType="org.noah.web.sys.pojo.user.SysUser">
-        select t.* from sys_user t
+        <include refid="columns"/>
+        <include refid="joins"/>
         <include refid="conditions"/>
         ${orderSql}
     </select>
 
     <select id="getByLoginName" resultType="org.noah.web.sys.pojo.user.SysUser">
-        select * from sys_user where login_name = #{loginName} and flag='1'
+        <include refid="columns"/>
+        <include refid="joins"/>
+        where t.login_name = #{loginName} and t.flag='1'
     </select>
 
     <select id="getUserByRoleId" resultType="org.noah.web.sys.pojo.user.SysUser">

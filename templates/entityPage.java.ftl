@@ -33,7 +33,7 @@ import org.noah.core.common.BasePage;
 @ApiModel(value = "${entity}Page对象", description = "${table.comment!}分页查询入参")
 public class ${entity}Page extends BasePage<${entity}> {
 
-    @ApiModelProperty(value = "模糊搜索(生成代码后需再mapper中实现)", position = 0)
+    @ApiModelProperty(value = "模糊搜索", position = 0)
     private String search;
 
 <#-- ----------  BEGIN 字段循环遍历  ---------->

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.noah.web.sys.mapper.SysOrgMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    t.ID
+    ,t.CODE
+    ,t.NAME
+    ,t.TYPE
+    ,t.STATE
+    ,t.FLAG
+    ,t.CREATE_USER_ID
+    ,t.UPDATE_USER_ID
+    ,t.CREATE_TIME
+    ,t.CREATE_LOGIN_NAME
+    ,t.CREATE_REAL_NAME
+    ,t.UPDATE_TIME
+    ,t.UPDATE_LOGIN_NAME
+    ,t.UPDATE_REAL_NAME
+    ,t.LEGAL_REPRESENTATIVE
+    ,t.USC_CODE
+    ,t.ESTABLISHMENT_DATE
+    ,t.AREA_CODE
+    ,t.AREA_NAME
+    ,t.ADDRESS
+    ,t.PHONE
+    ,t.PHONE2
+    ,t.MAIL
+    ,t.INDUSTRY
+    ,t.ABBREVIATION
+    ,t.LOGO
+    ,t.PARENT_ID
+    ,t.REMARKS
+    ,t.SEARCH_CODE
+    </sql>
+
+    <sql id="conditions">
+        <where>
+            t.flag = 1
+            <if test="search != null and search != ''">
+                and t.SEARCH_CODE like upper(#{search})
+            </if>
+            <if test="code != null and code != ''">
+                and t.CODE = #{code}
+            </if>
+            <if test="name != null and name != ''">
+                and t.NAME = #{name}
+            </if>
+            <if test="type != null and type != ''">
+                and t.TYPE = #{type}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectPageList" resultType="org.noah.web.sys.pojo.org.SysOrg">
+        select <include refid="Base_Column_List"/> from sys_org t
+        <include refid="conditions"/>
+        ${orderSql}
+    </select>
+
+</mapper>

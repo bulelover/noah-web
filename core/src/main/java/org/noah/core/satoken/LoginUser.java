@@ -42,4 +42,27 @@ public class LoginUser implements Serializable {
     @ApiModelProperty(value = "头像路径", position = 190)
     private String headImgPath;
 
+    @ApiModelProperty(value = "备注", position = 200)
+    private String remarks;
+
+    @ApiModelProperty(value = "直属上级", position = 202)
+    private String directSuperior;
+
+    @ApiModelProperty(value = "直属上级姓名", position = 203)
+    private String directSuperiorName;
+
+    @ApiModelProperty(value = "昵称", position = 210)
+    private String nickName;
+
+    @ApiModelProperty(value = "组织机构主键", position = 220)
+    private String orgId;
+
+    @ApiModelProperty(value = "组织机构名称", position = 222)
+    private String orgName;
+
+    @ApiModelProperty(value = "部门主键", position = 224)
+    private String departmentId;
+
+    @ApiModelProperty(value = "部门名称", position = 226)
+    private String departmentName;
 }

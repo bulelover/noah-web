@@ -145,4 +145,46 @@ public class SysUser implements Serializable {
     private String flag;
 
 
+    /**
+     * 备注
+     */
+    @TableField("REMARKS")
+    private String remarks;
+
+    /**
+     * 直属上级
+     */
+    @TableField("DIRECT_SUPERIOR")
+    private String directSuperior;
+
+    /**
+     * 直属上级姓名
+     */
+    @TableField(value = "DIRECT_SUPERIOR_NAME",exist = false)
+    private String directSuperiorName;
+
+    /**
+     * 昵称
+     */
+    @TableField("NICK_NAME")
+    private String nickName;
+
+    /**
+     * 组织机构主键
+     */
+    @TableField("ORG_ID")
+    private String orgId;
+
+    @TableField(value = "ORG_NAME", exist = false)
+    private String orgName;
+
+    /**
+     * 部门主键
+     */
+    @TableField("DEPARTMENT_ID")
+    private String departmentId;
+
+    @TableField(value = "DEPARTMENT_NAME", exist = false)
+    private String departmentName;
+
 }

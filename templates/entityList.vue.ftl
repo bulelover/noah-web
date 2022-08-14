@@ -37,14 +37,12 @@
 		</#if>
 	</#list>
 	<#------------  END 字段循环遍历  ---------->
-				<el-table-column label="操作" width="200" class-name="link-menu" fixed="right"
-          v-if="G.hasPerm('${permission!}-edit') || G.hasPerm('${permission!}-delete')">
+				<el-table-column label="操作" :width="toolbarWidth" class-name="link-menu" fixed="right"
+												 v-if="toolbarWidth > 0">
 					<template v-slot="{row}">
-						<el-link v-if="G.hasPerm('${permission!}-edit')" :underline="false" type="primary" @click="edit(row)">
-							修改
+						<el-link v-if="G.hasPerm('${permission!}-edit')" :underline="false" type="primary" @click="edit(row)">修改
 						</el-link>
-						<el-link v-if="G.hasPerm('${permission!}-delete')" :underline="false" type="danger" @click="del(row)">
-							删除
+						<el-link v-if="G.hasPerm('${permission!}-delete')" :underline="false" type="danger" @click="del(row)">删除
 						</el-link>
 					</template>
 				</el-table-column>
@@ -59,7 +57,11 @@
 				></el-pagination>
 			</div>
 		</div>
-    <${entity}Form v-if="editVisible" ref="edit" @refreshTable="fetchData"></${entity}Form>
+		<transition name="slide-fade">
+			<div class="page-children" v-show="editVisible">
+				<${entity}Form v-if="editVisible" ref="edit" @refreshTable="fetchData"></${entity}Form>
+			</div>
+		</transition>
   </div>
 </template>
 <script>
@@ -87,6 +89,18 @@
 				total: 0,
 				editVisible: false,
 				tableData: [],
+			}
+		},
+		computed: {
+			toolbarWidth() {
+				let perms = [
+									[G.hasPerm('${permission!}-edit'), 60],
+									[G.hasPerm('${permission!}-delete'), 60],
+								], width = 0;
+				perms.forEach(v => {
+					if (v[0]) width += v[1];
+				})
+				return width;
 			}
 		},
 		created() {
