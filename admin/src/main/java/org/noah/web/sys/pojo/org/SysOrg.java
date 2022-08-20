@@ -1,5 +1,6 @@
 package org.noah.web.sys.pojo.org;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -165,5 +166,15 @@ public class SysOrg implements Serializable {
      * 搜索码
      */
     private String searchCode;
+    /**
+     * 树层级ID
+     */
+    private String treeIds;
+
+    /**
+     * 下级数量
+     */
+    @TableField(value = "CHILD_NUM", exist = false)
+    private Integer childNum;
 
 }

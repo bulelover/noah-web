@@ -11,7 +11,7 @@
           <el-button :disabled="loading || saveLoading" @click="close">取消</el-button>
         </div>
       </div>
-      <el-form class="form-body" ref="form" :model="form" :rules="rules" label-width="120px" :disabled="isView">
+      <el-form class="form-body" ref="form" :model="form" :rules="rules" label-width="120px" :disabled="isView" v-if="!loading">
           <#-- ----------  BEGIN 字段循环遍历  ---------->
           <#list table.fields as field>
               <#if field.propertyName != 'createTime' && field.propertyName != 'updateTime'

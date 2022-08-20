@@ -32,11 +32,17 @@ public class SysOrgPage extends BasePage<SysOrg> {
     @ApiModelProperty(value = "组织/企业/单位名称", position = 15)
     private String name;
 
-    @ApiModelProperty(value = "组织类型（字典：org_type）", position = 20)
+    @ApiModelProperty(value = "组织类型", position = 20)
     private String type;
+
+    @ApiModelProperty(value = "层级ID", position = 20)
+    private String treeIds;
 
     public String getSearch() {
         return this.getLikeSql(search);
     }
 
+    public String getTreeIds() {
+        return this.getLikeRightSql(treeIds);
+    }
 }

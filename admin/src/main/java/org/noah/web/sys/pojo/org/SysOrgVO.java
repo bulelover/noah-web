@@ -33,12 +33,14 @@ public class SysOrgVO implements Serializable {
     private String code;
 
     @ApiModelProperty(value = "组织/企业/单位名称", position = 10)
+    @Check(value = "组织名称", required = true)
     private String name;
 
     @ApiModelProperty(value = "组织类型（字典：org_type）select", position = 15)
     private String type;
 
     @ApiModelProperty(value = "状态1启用 0禁用", position = 20)
+    @Check(value = "状态", required = true)
     private String state;
 
     @ApiModelProperty(value = "法定代表人", position = 70)
@@ -51,7 +53,8 @@ public class SysOrgVO implements Serializable {
     @JSONField(format = "yyyy-MM-dd")
     private LocalDateTime establishmentDate;
 
-    @ApiModelProperty(value = "行政区划代码", position = 85)
+    @ApiModelProperty(value = "所属地区代码", position = 85)
+    @Check(value = "所属地区", required = true)
     private String areaCode;
 
     @ApiModelProperty(value = "行政区划名称", position = 90)

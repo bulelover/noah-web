@@ -3,6 +3,8 @@ package org.noah.web.sys.mapper;
 import org.noah.web.sys.pojo.org.SysOrg;
 import org.noah.core.common.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 组织机构 Mapper 接口
@@ -13,4 +15,5 @@ import org.noah.core.common.BaseMapper;
  */
 public interface SysOrgMapper extends BaseMapper<SysOrg> {
 
+    List<SysOrg> selectChildren(String pid);
 }

@@ -45,7 +45,7 @@ public class SysAreaController extends BaseController {
         this.sysAreaService = sysAreaService;
     }
 
-    @SaCheckPermission("sys-area-view")
+    @SaCheckPermission
     @GetMapping("/getById")
     @ApiImplicitParam(name = "id", value = "区划ID")
     @ApiOperation(value = "根据ID查询区划")
@@ -68,7 +68,7 @@ public class SysAreaController extends BaseController {
         return this.success(res);
     }
 
-    @SaCheckPermission("sys-area")
+    @SaCheckPermission
     @GetMapping("/children")
     @ApiOperation(value = "查询下级区划列表")
     @ApiOperationSupport(order = 20)

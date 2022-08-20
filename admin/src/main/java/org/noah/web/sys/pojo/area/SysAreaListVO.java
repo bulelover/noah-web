@@ -84,5 +84,9 @@ public class SysAreaListVO implements Serializable {
     public Boolean getHasChildren(){
         return this.childNum != null && this.childNum > 0;
     }
+    @ApiModelProperty(value = "是否最后一级（仅在查询下级接口返回）", position = 173)
+    public Boolean getLeaf(){
+        return !this.getHasChildren();
+    }
 
 }

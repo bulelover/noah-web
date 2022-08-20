@@ -104,11 +104,27 @@ public class SysOrgListVO implements Serializable {
     @ApiModelProperty(value = "父级主键", position = 130)
     private String parentId;
 
+    @ApiModelProperty(value = "父级机构名称", position = 130)
+    private String parentName;
+
     @ApiModelProperty(value = "备注", position = 135)
     private String remarks;
 
     @ApiModelProperty(value = "搜索码", position = 136)
     private String searchCode;
 
+    @ApiModelProperty(value = "层级ID", position = 136)
+    private String treeIds;
 
+    @ApiModelProperty(value = "下级数量（仅在查询下级接口返回）", position = 170)
+    private Integer childNum;
+
+    @ApiModelProperty(value = "是否拥有下级（仅在查询下级接口返回）", position = 172)
+    public Boolean getHasChildren(){
+        return this.childNum != null && this.childNum > 0;
+    }
+    @ApiModelProperty(value = "是否最后一级（仅在查询下级接口返回）", position = 173)
+    public Boolean getLeaf(){
+        return !this.getHasChildren();
+    }
 }

@@ -1,25 +1,28 @@
 package org.noah.web.sys.controller;
 
-import org.noah.core.common.BaseController;
-import org.springframework.web.bind.annotation.*;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.noah.core.annotation.Log;
+import org.noah.core.common.BaseController;
 import org.noah.core.common.BaseResult;
 import org.noah.core.common.PageResult;
 import org.noah.core.utils.BeanUtils;
 import org.noah.core.utils.CheckUtils;
 import org.noah.web.sys.pojo.org.SysOrg;
+import org.noah.web.sys.pojo.org.SysOrgListVO;
+import org.noah.web.sys.pojo.org.SysOrgPage;
+import org.noah.web.sys.pojo.org.SysOrgVO;
 import org.noah.web.sys.service.ISysOrgService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.noah.web.sys.pojo.org.SysOrgListVO;
-import org.noah.web.sys.pojo.org.SysOrgVO;
-import org.noah.web.sys.pojo.org.SysOrgPage;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -54,7 +57,12 @@ public class SysOrgController extends BaseController {
         if(entity == null || "0".equals(entity.getFlag())){
             return this.failure("信息不存在");
         }
-        return this.success(BeanUtils.parse(entity, SysOrgListVO.class));
+        SysOrgListVO vo = BeanUtils.parse(entity, SysOrgListVO.class);
+        if(StringUtils.isNotBlank(entity.getParentId())){
+            SysOrg po = sysOrgService.getById(id);
+            vo.setParentName(po == null?"":po.getName());
+        }
+        return this.success(vo);
     }
 
     @SaCheckPermission("sys-org")
@@ -64,6 +72,15 @@ public class SysOrgController extends BaseController {
     public BaseResult<PageResult<SysOrgListVO>> page(SysOrgPage page){
         PageResult<SysOrgListVO> res = sysOrgService.selectPage(page,  SysOrgListVO.class);
         return this.success(res);
+    }
+    @SaCheckPermission
+    @GetMapping("/children")
+    @ApiOperation(value = "查询下级组织列表")
+    @ApiOperationSupport(order = 20)
+    @ApiImplicitParam(name = "pid",value = "上级组织ID")
+    public BaseResult<List<SysOrgListVO>> selectChildren(@RequestParam(required = false) String pid){
+        List<SysOrg> res = sysOrgService.selectChildren(pid);
+        return this.success(BeanUtils.parseList(res, SysOrgListVO.class));
     }
 
     @SaCheckPermission("sys-org-add")
